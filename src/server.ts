@@ -1,7 +1,7 @@
 import express from 'express';
 import { serverConfig } from './config/index.ts';
 import v1Router from './routes/v1/index.router.ts';
-import { genericErrorHandler } from './middleware/error.middleware.ts';
+import { appErrorHandler, genericErrorHandler } from './middleware/error.middleware.ts';
 import logger from './config/logger.config.ts';
 import { attachedCorrelatioIdMiddleware } from './middleware/correlation.middleware.ts';
 
@@ -14,6 +14,7 @@ app.use(attachedCorrelatioIdMiddleware);
 app.use('/api/v1', v1Router);
 
 
+app.use(appErrorHandler);
 app.use(genericErrorHandler);
 
 app.listen(serverConfig.PORT, () => {

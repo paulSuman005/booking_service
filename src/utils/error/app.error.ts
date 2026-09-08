@@ -2,6 +2,10 @@ export interface AppError extends Error {
     statusCode: number;
 }
 
+export function isAppError(err: Error): err is AppError {
+  return "statusCode" in err;
+}
+
 export class InternalServerError implements AppError {
     statusCode: number;
     message: string;
@@ -11,6 +15,18 @@ export class InternalServerError implements AppError {
         this.statusCode = 500;
         this.message = message;
         this.name = "INTERNAL_SERVER_ERROR"
+    }
+}
+
+export class BadRequestError implements AppError {
+    statusCode: number;
+    message: string;
+    name: string;
+
+    constructor(message: string) {
+        this.statusCode = 400;
+        this.message = message;
+        this.name = "BAD_REQUEST_ERROR";
     }
 }
 
