@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 type serverConfig = {
-    PORT: number
+    PORT: number,
+    REDIS_SERVER_URL: string,
+    LOCK_TTL: number
 }
 
 type dbConfig = {
@@ -14,7 +16,9 @@ type dbConfig = {
 }
 
 export const serverConfig: serverConfig = {
-    PORT: Number(process.env.PORT) || 3005
+    PORT: Number(process.env.PORT) || 3005,
+    REDIS_SERVER_URL: process.env.REDIS_SERVER_URL || "localhost:7500",
+    LOCK_TTL: Number(process.env.LOCK_TTL) || 300000
 }
 
 export const dbConfig: dbConfig = {
