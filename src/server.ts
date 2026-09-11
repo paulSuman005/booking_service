@@ -19,5 +19,5 @@ app.use(genericErrorHandler);
 
 app.listen(serverConfig.PORT, () => {
     logger.info(`app is running at http://localhost:${serverConfig.PORT}`);
-    logger.info("Press ctrl + c for stop the server!", {name: "dev server"})
+    logger.info("Press ctrl + c for stop the server!", {name: "dev server"});
 })
