@@ -2,9 +2,27 @@ import { Redis } from "ioredis";
 import { Redlock } from "@sesamecare-oss/redlock";
 import { serverConfig } from "./index.ts";
 
-export const redisClient = new Redis(serverConfig.REDIS_SERVER_URL);
+function connectToRedis() {
+    try {
+        let connection: Redis;
 
-export const redlock = new Redlock([redisClient], {
+        return () => {
+            if(!connection){
+                connection = new Redis(serverConfig.REDIS_SERVER_URL);
+                return connection;
+            }
+            return connection;
+        }
+    } catch (err) {
+        console.error("Error in connection to redis", err);
+        throw err;
+    }
+}
+
+export const getRedisConnObject = connectToRedis();
+
+
+export const redlock = new Redlock([getRedisConnObject()], {
     driftFactor: 0.01,
 
     retryCount: 10,

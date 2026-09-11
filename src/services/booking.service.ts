@@ -33,6 +33,7 @@ export async function createBookingService(createBookingDTO: CreateBookingDTO) {
         }
     } catch (err) {
         // if failed to acquire lock on booking resouce then it throw this error
+        console.log("Error in aquiring lock on booking resource: ", err);
         throw new InternalServerError("Failed to aquire lock on booking resource");
     }
 
